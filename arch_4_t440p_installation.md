@@ -44,30 +44,9 @@ To check if the UEFI mode is enabled, run:
 
 if does not exists, the system may be booted in BIOS, so you need to reboot, enter to Thinkpad Setup (F1) / Startup and set UEFI/Legacy Boot to UEFI Only and save and reboot again.
 
-### Update System Clock
-
-Check the current zone defined for the system:
-
-    # timedatectl status
-
-If system clock is not synchronized and NTP is inactive, run this command that ensures the system clock is accurate:
-
-	# timedatectl set-ntp true
-
-Second find your time zone:
-
-    # timedatectl list-timezones
-
-And then set it up. In my case would be:
-
-    # timedatectl set-timezone Europe/Madrid
-
-Check it again to ensure everything is right as expected.
-
-
 ###  Internet Connection
 
-If you're not connected, follow one of these steps:
+Before to do anything you need to connect the machine outside of your cave. If you're not connected, follow one of these steps, otherwise jump to System Clock section.
 
 #### Wired (TODO)
 
@@ -81,11 +60,15 @@ Most of the guides recommend to use `wifi-menu`, command that has been deprecate
 
 Check if wi-fi exists
 
+``` shell
 [iwd]# device list
+```
 
 To connect:
 
+``` shell
 [iwd]# station DEVICE connect SSID
+```
 
 where DEVICE could be wlan0 or another strange name device.
 
@@ -94,6 +77,35 @@ Exit from iwd and test if you have internet connection. So run:
 ``` shell
 # ping -c 2 google.com
 ```
+
+### Update System Clock
+
+Check the current zone defined for the system:
+
+``` shell
+# timedatectl status
+```
+
+If system clock is not synchronized and NTP is inactive, run this command that ensures the system clock is accurate:
+
+``` shell
+# timedatectl set-ntp true
+```
+
+Second find your time zone:
+
+``` shell
+# timedatectl list-timezones
+```
+
+And then set it up. In my case would be:
+
+``` shell
+# timedatectl set-timezone Europe/Madrid
+```
+
+Check it again to ensure everything is right as expected.
+
 ### Partitioning
 
 First, define your partitions size. There's no rules about this process.
@@ -177,71 +189,215 @@ The process for swap partition is slight different:
 
 To check if the swap partition is working, run `swapon -s` or `free -h`.
 
+#### Mount file system
+
+
+1. Mount root partition:
+    ```sh
+    # mount /dev/sda2 /mnt
+    ```
+2. Mount home partition:
+    ```sh
+    # mkdir -p /mnt/home
+    # mount /dev/sda4 /mnt/home
+    ```
+3. Mount boot partition: (to use `grub-install` later)
+    ```sh
+    # mkdir -p /mnt/boot/efi
+    # mount /dev/sda1 /mnt/boot/efi
+    ```
 
 ## Installation
 
+It's time to install arch on disk. Let's go!
 
+### Install Base Package
+
+You can edit the mirror list by editing the file `/etc/pacman.d/mirrorlist` to choose the mirror you want to user on the higher place depending on your location:
+
+``` shell
+# nano /etc/pacman.d/mirrorlist
+```
+
+But as you noticed before, once you connect it to internet and then set up the system clock, the installation system will generate a new mirrorlist file by Reflector.
+
+Now use `pacstrap` to install the base package group:
+
+```shell
+# pacstrap /mnt base base-devel linux linux-firmware nano
+```
+
+I have added Nano text editor to the list because you'll need to edit some files after installation.
+
+>Note: since 2019-10-06 it's requires to install a kernel besides installing the base package. This is related to: [mkinitcpio : command not found](https://unix.stackexchange.com/questions/547650/mkinitcpio-command-not-found).
+
+### Generate fstab
+
+The final step is to generate a fstab file that will include partition information.
+
+``` shell
+# genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+> Optional: you can add `noatime` instead of `realtime`to the generated `fstab` file (on root and home partitions) to increase IO performance for SSD drives.
+
+Before we reboot into newly installed OS will need to add few configuration changes and install and configure boot loader.
+
+
+### Configure the newly installed Arch before the first reboot
+
+Chroot into newly installed Archlinux:
+
+```shell
+# arch-chroot /mnt
+```
+
+> Now, if you want to install some package, do it with `pacman -S <package_name>`
+
+### Check pacman keys
+```sh
+# pacman-key --init
+# pacman-key --populate archlinux
+```
 ### Locale and Language
 
-Open /etc/locale.gen and uncomment
+Make a backup copy of the file `/etc/locale.gen` and generate a new one:
 
-Then, generate locale settings by running:
+``` shell
+# mv /etc/locale.gen /etc/locale.gen.bak
+# echo “ca_ES.UTF-8 UTF-8” >> /etc/locale.gen
+# echo “LANG=ca_ES.UTF-8” > /etc/locale.conf
+```
 
-	# locale-gen
+Export your locale string with:
 
-#### Keymap
+```sh
+# export LANG=ca_ES.UTF-8  #-- as example
+```
 
-https://wiki.archlinux.org/index.php/Linux_console_(Espa%C3%B1ol)/Keyboard_configuration_(Espa%C3%B1ol)
+Verify everything is correct before generate new locale :
+
+``` shell
+# cat /etc/locale.gen
+# cat /etc/locale.conf
+# locale-gen
+# locale
+```
+
+### Keymap
+
+First of all, obtain the list of all the avalaible keyboard maps:
+
+
+``` shell
+# localectl list-keymaps
+```
+
+For a persistent keymap, create the file `/etc/vconsole.conf` and write your console settings. For example:
+
+``` shell
+KEYMAP=es
+```
 
 https://gist.github.com/android10/74657da5d16f4f69ca62443215cb5b4f
 
-#### Timezone
+
+### Time zone
+
+I'm based in Catalonia so I need to select the correct time zone by listing the content of the `/usr/share/zoneinfo`:
+
+``` shell
+# ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+# ls -la /etc/localtime
+# hwclock --systohc
+```
 
 ### Network
 
 #### Hostname
 
-		# echo myhostname > /etc/hostname
+Create a `/etc/hostname` file and add the hostname entry to this file. Hostname is basically the name of your computer on the network.
+
+``` shell
+# echo myhostname > /etc/hostname
+```
+
+The next part is to create the hosts file:
+
+``` shell
+# nano /etc/hosts
+```
+
+Add the following lines to it (replace myhostname with hostname you chose earlier):
 
 
+``` shell
+127.0.0.1     localhost myhostname
+```
 
-## Initramfs
+#### Nameservers
 
-https://unix.stackexchange.com/questions/547650/mkinitcpio-command-not-found
+Check the DNS again (using Google DNS). Open `/etc/resolv.conf` and write:
 
-Bàsicament cal afegir al pacstrap linux linux-firmware
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+search example.com
+```
 
-a continuació, tornar al chroot i executar
+### Root password
 
-	# mkinitcpio -p linux
+Set the root password:
 
-### Setup Wifi
+``` shell
+# passwd
+```
 
-	# pacman -S iw wireless_tools wpa_supplicant dialog netctl
+### Install useful packages
 
-	No acabo d'entendre si amb l'iw va genial, potser cal descartar la resta de paquets
+``` shell
+# pacman -Syyuu
+# pacman -S netctl wpa_supplicant dialog git tmux wget rsync reflector vim
+```
 
+### Bootloader
 
-## Bootloader
+Install Grub and efibootmgr:
 
-	# pacman -S grub efibootmgr
+```sh
+# pacman -S grub efibootmgr
+```
 
 Run grub automatic installation on disk:
 
-	# grub-install /dev/sda
+```sh
+# grub-install /dev/sda
+```
 
 Create grub.cfg file:
 
-	# grub-mkconfig -o /boot/grub/grub.cfg
+```sh
+# grub-mkconfig -o /boot/grub/grub.cfg
+```
 
+### First Reboot
 
-## Root password
+Exit chroot environment by pressing `Ctrl + D` or typing `exit`.
 
-	# passwd
+Unmount system mount points:
 
+```sh
+# umount -R /mnt
+```
 
+First Reboot System:
 
-		## Configuracion de WIfi
+```sh
+# reboot
+```
 
-		Sobretodo:
-		https://bbs.archlinux.org/viewtopic.php?id=257364
+> Remember to remove USB stick on reboot
+
+---
+
+https://bbs.archlinux.org/viewtopic.php?id=257364
