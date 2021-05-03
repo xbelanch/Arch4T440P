@@ -357,7 +357,7 @@ Set the root password:
 
 ``` shell
 # pacman -Syyuu
-# pacman -S netctl wpa_supplicant dialog git tmux wget rsync reflector vim
+# pacman -S iwd git tmux wget rsync reflector vim
 ```
 
 ### Bootloader
@@ -399,5 +399,31 @@ First Reboot System:
 > Remember to remove USB stick on reboot
 
 ---
+
+
+## Configure Wifi network
+
+Try this. iwd need to be installed.
+
+sudo systemctl enable --now systemd-networkd systemd-resolved iwd
+networkctl status -a
+sudo nvim /etc/systemd/network/20-wireless.network     
+
+[Match]
+Name=wlan0
+
+[Network]
+DHCP=yes     
+
+Save file and execute commnand:
+
+	# iwctl
+
+[iwd]# station wlan0 connect mywifiname
+[iwd]# exit
+
+networkctl status -a
+
+To connect to a network with spaces in the SSID, the network name should be double quoted when connecting.
 
 https://bbs.archlinux.org/viewtopic.php?id=257364
