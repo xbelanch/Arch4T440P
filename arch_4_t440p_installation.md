@@ -447,7 +447,7 @@ and finally:
 # networkctl status -a
 ```
 
-## Add Users
+## Create new user and group
 
 Install sudo package
 
@@ -484,4 +484,23 @@ Change the new user passord:
 
 ``` shell
 # passwd myuser
+```
+
+## Basic Pacman configuration
+
+Arch Linux uses a list of the mirror where all packages are synchronized using `pacman -Syyuu`.
+
+The file that keeps all mirrors is located in `/etc/pacman.d/mirrorlist`, is a good idea to configure mirrorlist file with mirror fastest and closer to you. We will use the reflector tool that will configure the file automatically.
+
+``` shell
+# reflector --verbose --latest 200 --number 5 --sort rate --save /etc/pacman.d/mirrorlist
+```
+### Add nice color to pacman output
+
+Add some color to the package manager
+
+``` shell
+# grep “Color” /etc/pacman.conf
+# sudo sed -i -e ‘s/#Color/Color/g’ /etc/pacman.conf
+# grep “Color” /etc/pacman.conf
 ```
