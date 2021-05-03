@@ -4,6 +4,8 @@ This step-by-step guide will help to install Arch Linux on my Thinkapd T440P.
 
 Remember that Arch is not Debian. If distros were programming languages Arch will be C, Debian will be C++ and Ubuntu will be Python.
 
+# Part One: Basic ArchLinux Installation
+
 ## Bootable Flash Drive
 
 First of all, you need the Arch Linux image, that can be downloaded from the Official Website. After that, you should create the bootable flash drive with the Arch Linux image.
@@ -12,7 +14,9 @@ If you're on Windows, you can use Balena, USBwriter, win32diskimager or Rufus [h
 
 If your're on GNU/Linux distribution (tired of Debian, bro?), you can use `dd` command for it. You can find a lot of examples like:
 
-    # dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync && sync
+``` shell
+# dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync && sync
+```
 
 Note you need to custom of `of=/dev/sdx` with your USB device location. You can discovered with the `lsblk` command.
 
@@ -30,17 +34,23 @@ If everything is running okay, then you must see a cow talking to you.
 
 I'm from Catalonia, so for catalan users:
 
-	# loadkeys es
+``` shell
+# loadkeys es
+```
 
 You can see the list of available layouts by running
 
-	# ls /usr/shar/kbd/keymaps/**/*.map.gz
+``` shell
+# ls /usr/shar/kbd/keymaps/**/*.map.gz
+```
 
 ### Check boot mode
 
 To check if the UEFI mode is enabled, run:
 
-	# ls /sys/firmware/efi/efivars
+``` shell
+# ls /sys/firmware/efi/efivars
+```
 
 if does not exists, the system may be booted in BIOS, so you need to reboot, enter to Thinkpad Setup (F1) / Startup and set UEFI/Legacy Boot to UEFI Only and save and reboot again.
 
@@ -48,9 +58,9 @@ if does not exists, the system may be booted in BIOS, so you need to reboot, ent
 
 Before to do anything you need to connect the machine outside of your cave. If you're not connected, follow one of these steps, otherwise jump to System Clock section.
 
-#### Wired (TODO)
+#### Wired
 
-# dhcpcd
+// TODO
 
 #### Wi-Fi
 
@@ -357,7 +367,7 @@ Set the root password:
 
 ``` shell
 # pacman -Syyuu
-# pacman -S iwd git tmux wget rsync reflector vim
+# pacman -S iwd git tmux wget rsync reflector vim nano
 ```
 
 ### Bootloader
@@ -398,32 +408,80 @@ First Reboot System:
 
 > Remember to remove USB stick on reboot
 
----
-
+# Part two: Basic Configuration after First Reboot
 
 ## Configure Wifi network
 
 Try this. iwd need to be installed.
 
-sudo systemctl enable --now systemd-networkd systemd-resolved iwd
-networkctl status -a
-sudo nvim /etc/systemd/network/20-wireless.network     
+``` shell
+# sudo systemctl enable --now systemd-networkd systemd-resolved iwd
+# networkctl status -a
+# nano /etc/systemd/network/20-wireless.network
+```
+and include this configuration
 
+``` shell
 [Match]
 Name=wlan0
 
 [Network]
-DHCP=yes     
+DHCP=yes
+```
 
 Save file and execute commnand:
 
-	# iwctl
+``` shell
+# iwctl
+```
 
+Do you remember that?
+
+``` shell
 [iwd]# station wlan0 connect mywifiname
 [iwd]# exit
+```
+and finally:
 
-networkctl status -a
+``` shell
+# networkctl status -a
+```
 
-To connect to a network with spaces in the SSID, the network name should be double quoted when connecting.
+## Add Users
 
-https://bbs.archlinux.org/viewtopic.php?id=257364
+Install sudo package
+
+``` shell
+# pacman -S sudo
+```
+
+Configure sudo (uses vim as default editor) by running visudo and uncommenting the line:
+
+``` shell
+## Uncomment to allow members of group wheel to execute any command
+%wheel ALL=(ALL) ALL
+```
+
+If raises an error because it doesn't found vim (or nano) try:
+
+``` shell
+# sudo EDITOR=vim visudo
+```
+
+or
+
+``` shell
+# sudo EDITOR=nano visudo
+```
+
+Now we're going to add a new user by running: (change myuser to your username)
+
+``` shell
+# useradd -m -g users -G wheel myuser
+```
+
+Change the new user passord:
+
+``` shell
+# passwd myuser
+```
