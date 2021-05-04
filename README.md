@@ -2,7 +2,6 @@
 
 A simple step-by-step guide that remember me how to install Arch Linux on a refurbished *Thinkpad T440P* and I3 as a windows manager.
 
-
 ## TODO
 
 - [ ] Create a live USB of Arch Linux
@@ -32,3 +31,5 @@ A lot of this guide belongs to another people who wrote useful articles of how t
 * [ArchLinux Tutorial, Part 2: X Window System and I3 Installation](https://mudrii.medium.com/arch-linux-installation-on-hw-with-i3-windows-manager-part-2-x-window-system-and-i3-installation-86735e55a0a0). Last updated Feb 18, 2019.
 * [ArchLinux Tutorial, Part 3: I3 Configuration and Operation](https://mudrii.medium.com/archlinux-tutorial-part-3-i3-configuration-and-operation-9cd6dc90e524). Last updated Feb 18, 2019.
 * [arch linux for dummies](https://github.com/jieverson/dotfiles/wiki/arch-linux-for-dummies). Last update Sep 21, 2016.
+* [A detailed overview of how I installed Arch Linux on my Lenovo ThinkPad X1 Extreme (Gen 1), having never installed Arch before.](https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3)
+* [LightDM Configuration](https://christitus.com/lightdm-configuration/). Last update Jan 8, 2020.

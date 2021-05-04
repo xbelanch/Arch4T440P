@@ -504,3 +504,105 @@ Add some color to the package manager
 # sudo sed -i -e ‘s/#Color/Color/g’ /etc/pacman.conf
 # grep “Color” /etc/pacman.conf
 ```
+
+# Part 3: X Window System and I3 installation
+
+Before proceeding with the installation of the X-org is a good idea to update the system to the latest packages available.
+
+``` shell
+# sudo pacman -Syyuu
+```
+
+Installing Xorg, i3 and LightDM
+
+``` shell
+# pacman -S xorg-server xorg-apps mesa i3 lightdm lightdm-gtk-greeter rxvt-unicode dmenu
+```
+enable Light Desktop Manager by running:
+
+``` shell
+# sudo systemctl enable lightdm.service
+```
+
+and reboot the system.
+
+
+## Change keyboard layout X11
+
+If you have set a different keyboard layout, you will notice that your nice, new graphical login prompt does not use it. This is because the X window system uses its own configuration files. We need to tell it which layout to use.
+
+Change the layout, e.g. in my case to Spain Catalan by running
+
+
+``` shell
+# sudo localectl --no-convert set-x11-keymap es thinkpad cat
+```
+
+## Installing additional fonts (Optional) but highly recommended
+
+``` shell
+# pacman -S ttf-ubuntu-font-family ttf-fantasque-sans-mono ttf-dejavu ttf-roboto ttf-font-awesome
+```
+
+## Installing basic applications
+
+In my case I'd need these applications running on my refurbished laptop:
+
+``` shell
+# pacman -S pandoc emacs mypaint blender firefox vlc --noconfirm --needed
+```
+
+## Configure lightdm
+
+Before of that, install the next package:
+
+``` shell
+# pacman -S lightdm-webkit2-greeter
+```
+
+Start out with opening up your `/etc/lightdm/lightdm.conf` and this is where most of the modifications will take place.
+
+
+```
+greeter-session=lightdm-webkit2-greeter ### CHANGE THIS
+```
+
+Install what ever theme you want, this is called a greeter in lightdm, and then change the line above. After the changes are made you can either reboot or type `sudo systemctl restart lightdm` Please Note: This will log you out
+
+
+### Changing the theme
+
+You can install other themes than default. Check it out:
+
+* [LightDM WebKit2 theme Osmos ](https://github.com/Exauthor/lightdm-webkit-theme-osmos)
+* [A minimal lightdm-webkit2-greeter theme](https://github.com/allacee/lightdm-webkit2-theme-minimal)
+
+Installation:
+
+1. Clone or download a repo, for example, the last one.
+2. Copy the content of the repo to `/usr/share/lightdm-webkit/themes/minimal`
+2. Install `lightdm` and `lightdm-webkit2-greeter`
+4. Set webkit2 greeter as a greeter. Edit file `/etc/lightdm/lightdm.conf`:
+
+```shell
+[Seat:*]
+...
+greeter-session=lightdm-webkit2-greeter
+```
+
+5. Set this theme as greeter theme. Edit file `/etc/lightdm/lightdm-webkit2-greeter.conf`:
+
+```shell
+webkit_theme = minimal
+```
+6. Enjoy!
+
+
+>NOTE: I tried the last one but fails on session launch. Time to debug!
+
+
+## Finally, Neofetch!
+
+``` shell
+# pacman -S neofetch
+```
