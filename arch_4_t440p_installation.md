@@ -601,6 +601,61 @@ webkit_theme = minimal
 >NOTE: I tried the last one but fails on session launch. Time to debug!
 
 
+## Sound subsystem
+
+Installing sound drivers and tools
+
+``` shell
+# sudo pacman -S alsa-utils alsa-plugins alsa-lib pavucontrol --noconfirm --needed
+```
+
+For T440p put the following configuration in `/etc/modprobe.d/alsa.conf`  You may call the file an *.conf if "alsa" doesn't suit you:
+
+``` shell
+options snd_hda_intel enable=0,1
+options snd slots=snd_hda_intel, thinkpad_acpi
+options snd_hda_intel index=0
+options thinkpad_acpi index=1
+```
+
+To enable Fn Keys, you need to install PulseAudio:
+
+``` shell
+# sudo pacman -S pulseaudio pulseaudio-alsa
+```
+
+## Backlight system
+
+After google it, I found that [I am using T440p with haswell processor having intel hd4600, I am not sure if I am missing any graphics configuration.](https://www.reddit.com/r/archlinux/comments/edomnq/i_am_using_t440p_with_haswell_processor_having/) and I install the next package:
+
+``` shell
+# pacman -S xf86-video-intel
+```
+
+reboot and test if xbacklight is working now:
+
+
+``` shell
+$ xbacklight -dec 10
+```
+
+That means that I can add these lines on i3wm config as I can see on [XF86MonBrightnessUp/XF86MonBrightnessDown special keys not working](https://unix.stackexchange.com/questions/322814/xf86monbrightnessup-xf86monbrightnessdown-special-keys-not-working):
+
+``` shell
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+```
+And it works!
+
+
+
+## Dotfiles
+
+Take a look of this doc:
+
+[Dotfiles](https://wiki.archlinux.org/title/Dotfiles)
+
+
 ## Finally, Neofetch!
 
 ``` shell
