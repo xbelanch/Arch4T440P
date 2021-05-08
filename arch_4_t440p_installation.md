@@ -542,7 +542,7 @@ Change the layout, e.g. in my case to Spain Catalan by running
 ## Installing additional fonts (Optional) but highly recommended
 
 ``` shell
-# pacman -S ttf-ubuntu-font-family ttf-fantasque-sans-mono ttf-dejavu ttf-roboto ttf-font-awesome
+# pacman -S ttf-ubuntu-font-family ttf-fantasque-sans-mono ttf-dejavu ttf-roboto ttf-font-awesome noto-fonts noto-fonts-cjk noto-fonts-emoji
 ```
 
 ## Installing basic applications
@@ -562,7 +562,6 @@ Before of that, install the next package:
 ```
 
 Start out with opening up your `/etc/lightdm/lightdm.conf` and this is where most of the modifications will take place.
-
 
 ```
 greeter-session=lightdm-webkit2-greeter ### CHANGE THIS
