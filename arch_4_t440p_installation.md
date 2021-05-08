@@ -52,6 +52,7 @@ To check if the UEFI mode is enabled, run:
 # ls /sys/firmware/efi/efivars
 ```
 
+
 if does not exists, the system may be booted in BIOS, so you need to reboot, enter to Thinkpad Setup (F1) / Startup and set UEFI/Legacy Boot to UEFI Only and save and reboot again.
 
 ###  Internet Connection
@@ -648,6 +649,44 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 And it works!
 
 
+## Handle external monitor
+
+from: https://github.com/gotohr/i3wm-thinkpad-450s/blob/master/config
+
+set $mode_screen Multi-monitor setup: (e)xternal only, (i)nternal only, (c)lone, (s)eparated
+mode "$mode_screen" {
+    bindsym c exec --no-startup-id xrandr --output $OUTPUT_E --auto --output $OUTPUT_I --auto
+    bindsym e exec --no-startup-id xrandr --output $OUTPUT_E --auto --output $OUTPUT_I --off
+    bindsym i exec --no-startup-id xrandr --output $OUTPUT_I --auto --output $OUTPUT_E --off && xrandr --output $OUTPUT_DP --off
+    bindsym s exec --no-startup-id xrandr --output $OUTPUT_I --auto && xrandr --output $OUTPUT_E --right-of $OUTPUT_I
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+m mode "$mode_screen"
+
+
+## Resize float windows on i3wm
+
+The problem:
+
+https://www.reddit.com/r/i3wm/comments/f3e0j0/file_and_save_windows_open_so_large_that_the_top/
+
+https://www.reddit.com/r/i3wm/comments/a6yujn/placing_floating_window_always_in_the_center_of_a/
+
+Solved (check i3wm config)
+
+for_window [floating] move position center
+
+From: https://github.com/iDigitalFlame/dotfiles/blob/2526fd41ec57d6d31f9da441729d13d5932e1406/.config/i3/config#L73
+
+# Window Rules After Modify
+for_window              [title="Save As"]                       border normal, resize set 800 600
+for_window              [class="note" title="Open"]             border normal, resize set 800 600
+for_window              [class="stickynote" title="Open"]       border normal, resize set 800 600
+
+
+
 
 ## Dotfiles
 
@@ -655,6 +694,17 @@ Take a look of this doc:
 
 [Dotfiles](https://wiki.archlinux.org/title/Dotfiles)
 
+There's a different ways of handle and manage dotfiles. I decided to work with [GNU Stow](https://www.gnu.org/software/stow/).
+
+I found a few blog posts explaing how Stow works and it looks simple and straighforward:
+
+* [How I manage my dotfiles using GNU Stow](https://dev.to/writingcode/how-i-manage-my-dotfiles-using-gnu-stow-4l59)
+* [Managing dotfiles with GNU stow](https://alexpearce.me/2016/02/managing-dotfiles-with-stow/)
+* [4.2 Types And Syntax Of Ignore Lists](https://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html)
+
+At the moment you can find my dotifles repository here: [dotfiles](https://github.com/xbelanch/dotfiles).
+
+// TODO: Improve documentation
 
 ## Finally, Neofetch!
 
