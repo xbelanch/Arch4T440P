@@ -63,6 +63,22 @@ Before to do anything you need to connect the machine outside of your cave. If y
 
 // TODO
 
+You need to check if etehernet is at the list of avalaible devices:
+
+# ip -o link show
+
+In my case:
+
+2: enp0s25: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000\    link/ether 50:7b:9d:9f:d9:bb brd ff:ff:ff:ff:ff:ff
+
+
+Now, we configure at hand:
+
+sudo ip link set dev enp0s25 up
+sudo ip address add 192.168.1.211/24 dev enp0s25
+sudo ip route add default via 192.168.1.1
+
+
 #### Wi-Fi
 
 Most of the guides recommend to use `wifi-menu`, command that has been deprecated in favor of `iwctl`. So, run the following command and connect to your wi-fi network:
@@ -550,7 +566,7 @@ Change the layout, e.g. in my case to Spain Catalan by running
 In my case I'd need these applications running on my refurbished laptop:
 
 ``` shell
-# pacman -S pandoc emacs mypaint blender firefox vlc --noconfirm --needed
+# pacman -S pandoc emacs mypaint blender firefox mpv man --noconfirm --needed
 ```
 
 ## Configure lightdm
@@ -650,6 +666,12 @@ And it works!
 
 ## Handle external monitor
 
+I found that ARandR: Another XRandR GUI fits my needs at the moment.
+
+https://christian.amsuess.com/tools/arandr/
+
+In the future we can decide a simple script like tsoding or something more... terminal!
+
 from: https://github.com/gotohr/i3wm-thinkpad-450s/blob/master/config
 
 set $mode_screen Multi-monitor setup: (e)xternal only, (i)nternal only, (c)lone, (s)eparated
@@ -679,12 +701,9 @@ for_window [floating] move position center
 
 From: https://github.com/iDigitalFlame/dotfiles/blob/2526fd41ec57d6d31f9da441729d13d5932e1406/.config/i3/config#L73
 
-# Window Rules After Modify
-for_window              [title="Save As"]                       border normal, resize set 800 600
-for_window              [class="note" title="Open"]             border normal, resize set 800 600
-for_window              [class="stickynote" title="Open"]       border normal, resize set 800 600
+## Change the urxvt font size on the fly
 
-
+Read this: [Change the urxvt font size on the fly](https://blog.khmersite.net/2017/12/change-the-urxvt-font-size-on-the-fly/)
 
 
 ## Dotfiles
@@ -704,6 +723,33 @@ I found a few blog posts explaing how Stow works and it looks simple and straigh
 At the moment you can find my dotifles repository here: [dotfiles](https://github.com/xbelanch/dotfiles).
 
 // TODO: Improve documentation
+
+
+## Webdav (for synology)
+
+Install davfs2 from official repositories.
+
+``` shell
+# sudo pacman -S davfs2
+```
+
+At the moment we can mount as a sudo:
+
+sudo mount -t davfs https://mydomain.ddns.net:5006 /path/to/mount
+
+
+## Miscelaian
+
+* PDF viewer: mupdf
+* Image viewer:
+
+## LastPass support
+
+``` shell
+# pacman -S lastpass-cli
+```
+
+## Bye bye Firefox, welcome qutebrowser?
 
 ## Finally, Neofetch!
 
