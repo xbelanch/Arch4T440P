@@ -738,10 +738,29 @@ At the moment we can mount as a sudo:
 sudo mount -t davfs https://mydomain.ddns.net:5006 /path/to/mount
 
 
+## Yay
+
+mkdir sources && \
+cd sources && \
+git clone https://aur.archlinux.org/yay.git && \
+cd yay && \
+makepkg -si && \
+yay - editmenu - nodiffmenu - save
+
+
+Once is installed it works like pacman (from: https://www.makeuseof.com/how-to-install-and-remove-packages-arch-linux/)
+
+sudo yay -Syu
+yay -S packagename
+
+
+Thanks to Yay I've installed gm2! Modula-2 is still alive?
+
 ## Miscelaian
 
 * PDF viewer: mupdf
-* Image viewer:
+* Image viewer: feh
+
 
 ## LastPass support
 
