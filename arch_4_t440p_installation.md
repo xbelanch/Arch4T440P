@@ -687,7 +687,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 And it works!
 
 
-## Handle external monitor
+## Handle external monitor [Unfinished]
 
 I found that ARandR: Another XRandR GUI fits my needs at the moment.
 
@@ -710,7 +710,7 @@ mode "$mode_screen" {
 bindsym $mod+Shift+m mode "$mode_screen"
 
 
-## Resize float windows on i3wm
+## Resize float windows on i3wm [Unfinished]
 
 The problem:
 
@@ -729,7 +729,7 @@ From: https://github.com/iDigitalFlame/dotfiles/blob/2526fd41ec57d6d31f9da441729
 Read this: [Change the urxvt font size on the fly](https://blog.khmersite.net/2017/12/change-the-urxvt-font-size-on-the-fly/)
 
 
-## Dotfiles
+## Dotfiles [Unfinished]
 
 Take a look of this doc:
 
@@ -748,7 +748,7 @@ At the moment you can find my dotifles repository here: [dotfiles](https://githu
 // TODO: Improve documentation
 
 
-## Webdav (for synology)
+## Webdav (for Synology) [Unfinished]
 
 Install davfs2 from official repositories.
 
@@ -763,35 +763,49 @@ sudo mount -t davfs https://mydomain.ddns.net:5006 /path/to/mount
 
 ## Yay
 
-mkdir sources && \
-cd sources && \
-git clone https://aur.archlinux.org/yay.git && \
-cd yay && \
-makepkg -si && \
-yay - editmenu - nodiffmenu - save
+[Yay](https://github.com/Jguer/yay) is ab AUR Helper written in Go. What's AUR? AUR stands for Arch User Repository:
 
+>It is a community-driven repository for Arch-based Linux distributions users. It contains package descriptions named PKGBUILDs that allow you to compile a package from source with makepkg and then install it via pacman (package manager in Arch Linux).
+>
+>[Aur Arch Linux](https://itsfoss.com/aur-arch-linux/)
+
+Let's build Yay:
+
+``` shell
+$ mkdir sources && \
+$ cd sources && \
+$ git clone https://aur.archlinux.org/yay.git && \
+$ cd yay && \
+$ makepkg -si && \
+$ yay - editmenu - nodiffmenu - save
+```
 
 Once is installed it works like pacman (from: https://www.makeuseof.com/how-to-install-and-remove-packages-arch-linux/)
 
-sudo yay -Syu
-yay -S packagename
+``` shell
+$ sudo yay -Syu
+$ yay -S packagename
+```
+
+For example, the [Modula-2](https://www.nongnu.org/gm2/homepage.html) compiler only lives on AUR repository (good news). The bad news is that doesn't compile at the end.
+
+## Other interesting (and needed) packages [Unfinished]
+
+This a list of tiny applications needed for the everyday:
+
+* **PDF viewer**: [mupdf](https://mupdf.com/)
+* **Image viewer**: [feh](https://feh.finalrewind.org/)
 
 
-Thanks to Yay I've installed gm2! Modula-2 is still alive?
-
-## Miscelaian
-
-* PDF viewer: mupdf
-* Image viewer: feh
-
-
-## LastPass support
+## LastPass support [Unfinished]
 
 ``` shell
 # pacman -S lastpass-cli
 ```
 
-## Bye bye Firefox, welcome qutebrowser?
+## Bye bye Firefox, welcome qutebrowser? [Unfinished]
+
+
 
 ## Finally, Neofetch!
 
