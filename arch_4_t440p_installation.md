@@ -805,6 +805,77 @@ This a list of tiny applications needed for the everyday:
 
 ## Bye bye Firefox, welcome qutebrowser? [Unfinished]
 
+## Working with SSH Github
+
+1. Generating a new SSH key
+
+``` shell
+$ ssh-keygen -t ed25519 -C "xbelanch@protonmail.com"
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/home/xbelanch/.ssh/id_ed25519):
+Created directory '/home/xbelanch/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/xbelanch/.ssh/id_ed25519
+Your public key has been saved in /home/xbelanch/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:8+ct9Q4h4Spjy1ApCtfBJkmZChOoz1uk1MgzUIUC2Hw xbelanch@protonmail.com
+The key's randomart image is:
++--[ED25519 256]--+
+|*=.ooo           |
+|B +.Eo           |
+|.* =o +     .    |
+|. B o+ . . . .   |
+| +.=. o S   o .  |
+|  +o.. o o . ... |
+|   o. . + o .... |
+|  .    + + o.. ..|
+|        o   .....|
++----[SHA256]-----+
+```
+
+2. Adding your SSH key to the ssh-agent
+
+``` shell
+$ eval `ssh-agent -s`
+Agent pid 538
+$ ssh-add .ssh/id_ed25519
+Enter passphrase for .ssh/id_ed25519:
+Identity added: .ssh/id_ed25519 (xbelanch@protonmail.com)
+```
+
+3. Enter ls -al ~/.ssh to see if existing SSH keys are present:
+
+``` shell
+$ ls -al ~/.ssh
+total 16
+drwx------  2 xbelanch xbelanch 4096 May 11 10:47 .
+drwxr-xr-x 13 xbelanch xbelanch 4096 May 11 10:52 ..
+-rw-------  1 xbelanch xbelanch  464 May 11 10:47 id_ed25519
+-rw-r--r--  1 xbelanch xbelanch  105 May 11 10:47 id_ed25519.pub
+```
+
+4. Copy the SSH public key to your clipboard:
+
+Maybe you need to install xclip before that:
+
+``` shell
+$ xclip < ~/.ssh/id_ed25519.pub
+```
+
+and added to https://github.com/settings/keys
+
+
+5. Testing your SSH connection
+
+``` shell
+$ ssh -T git@github.com
+The authenticity of host 'github.com (140.82.121.3)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,140.82.121.3' (RSA) to the list of known hosts.
+Hi xbelanch! You've successfully authenticated, but GitHub does not provide shell access.
+```
 
 
 ## Finally, Neofetch!
