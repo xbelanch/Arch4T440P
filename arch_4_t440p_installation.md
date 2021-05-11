@@ -61,23 +61,46 @@ Before to do anything you need to connect the machine outside of your cave. If y
 
 #### Wired
 
-// TODO
-
 You need to check if etehernet is at the list of avalaible devices:
 
+``` shell
 # ip -o link show
+```
 
 In my case:
 
+``` shell
 2: enp0s25: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000\    link/ether 50:7b:9d:9f:d9:bb brd ff:ff:ff:ff:ff:ff
+```
+
+Now, try to test it configuring a static ip (192.168.1.211) manually:
+
+``` shell
+$ sudo ip link set dev enp0s25 up
+$ sudo ip address add 192.168.1.211/24 dev enp0s25
+$ sudo ip route add default via 192.168.1.1
+```
+
+Remember create the `etc/resolv.conf` for DNS:
 
 
-Now, we configure at hand:
+``` shell
+$ sudo nano /etc/resolv.conf
+```
 
-sudo ip link set dev enp0s25 up
-sudo ip address add 192.168.1.211/24 dev enp0s25
-sudo ip route add default via 192.168.1.1
+add to the file (OpenDNS servers):
 
+``` shell
+nameserver 208.67.222.222
+nameserver 208.67.220.220
+```
+
+or (Google DNS):
+
+``` shell
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
 
 #### Wi-Fi
 
