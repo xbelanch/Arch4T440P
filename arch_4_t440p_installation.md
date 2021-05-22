@@ -407,7 +407,7 @@ Set the root password:
 
 ``` shell
 # pacman -Syyuu
-# pacman -S iwd git tmux wget rsync reflector vim nano
+# pacman -S iwd git tmux wget rsync reflector vim nano inetutils
 ```
 
 ### Bootloader
@@ -795,7 +795,9 @@ This a list of tiny applications needed for the everyday:
 
 * **PDF viewer**: [mupdf](https://mupdf.com/)
 * **Image viewer**: [feh](https://feh.finalrewind.org/)
-
+* **Video player**: [mpv](https://mpv.io/)
+* **Music player**: [cmus](https://cmus.github.io/)
+* **Screenshot**: [scrot](https://github.com/resurrecting-open-source-projects/scrot)
 
 ## LastPass support [Unfinished]
 
