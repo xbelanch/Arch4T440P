@@ -798,6 +798,74 @@ This a list of tiny applications needed for the everyday:
 * **Video player**: [mpv](https://mpv.io/)
 * **Music player**: [cmus](https://cmus.github.io/)
 * **Screenshot**: [scrot](https://github.com/resurrecting-open-source-projects/scrot)
+* **Tex Live**: [TeX Live on Arch](https://wiki.archlinux.org/title/TeX_Live)
+
+## Printing
+
+// NOTE: At the moment I have no luck with the brother HL-L2375DW
+
+You must install cups package as you can read at [Cups](https://wiki.archlinux.org/title/CUPS)
+
+``` shell
+$ sudo pacman -S cups
+```
+
+I found this: https://aur.archlinux.org/packages/brother-hll2375dw/
+
+So...
+
+``` shell
+$ yay -Ss hll2375dw
+aur/brother-hll2375dw 4.0.0-2 (+2 1.05)
+    Brother HL-L2375DW CUPS driver
+```
+
+``` shell
+$ yay -S brother-hll2375dw
+```
+
+Still no luck... found this reddit: https://www.reddit.com/r/archlinux/comments/c9xddz/help_me_figure_out_cups/
+
+
+And maybe I need to install avahi:
+
+``` shell
+$ pacman -Ss avahi
+extra/avahi 0.8+20+gd1e71b3-1 [instal·lat]
+    Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
+```
+
+and....
+
+``` shell
+[rotter@bunker-T440p Arch4T440P]$ sudo systemctl start avahi-daemon.service
+[rotter@bunker-T440p Arch4T440P]$ lpinfo -v
+network beh
+file cups-brf:/
+network http
+network https
+network ipp
+network ipps
+network socket
+network lpd
+network smb
+network dnssd://Brother%20HL-L2375DW%20series._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-3c2af437b07c
+network ipp://Brother%20HL-L2375DW%20series._ipp._tcp.local/
+```
+
+But not luck already:
+
+``` shell
+$ tail -n 100 -f /var/log/cups/error_log
+E [27/May/2021:09:11:47 +0200] [CGI] ippfind (PID 8437) stopped with status 2!
+E [27/May/2021:09:11:47 +0200] [cups-deviced] PID 8421 (driverless) stopped with status 2!
+E [27/May/2021:09:13:39 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.local:631\": Name or service not known
+W [27/May/2021:09:17:26 +0200] CreateProfile failed: org.freedesktop.ColorManager.AlreadyExists:profile id \'Brother_HL-L2375DW_series-Gray..\' already exists
+E [27/May/2021:09:19:02 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.local:631\": Name or service not known
+```
+
+
+
 
 ## LastPass support [Unfinished]
 
