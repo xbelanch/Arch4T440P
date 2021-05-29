@@ -798,7 +798,7 @@ This a list of tiny applications needed for the everyday:
 * **Video player**: [mpv](https://mpv.io/)
 * **Music player**: [cmus](https://cmus.github.io/)
 * **Screenshot**: [scrot](https://github.com/resurrecting-open-source-projects/scrot)
-* **Tex Live**: [TeX Live on Arch](https://wiki.archlinux.org/title/TeX_Live)
+* **Tex Live**: [The LaTeX Project](https://www.tug.org/texlive/)
 
 ## Printing
 
