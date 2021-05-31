@@ -947,6 +947,52 @@ Warning: Permanently added 'github.com,140.82.121.3' (RSA) to the list of known 
 Hi xbelanch! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
+## From bash to zsh
+
+First of all, check what shell is installed by default:
+
+``` shell
+$ echo $SHELL
+```
+
+Next install zsh:
+
+
+``` shell
+$ sudo pacman -S zsh
+```
+
+Make it as default shell:
+
+
+``` shell
+$ chsh -s /bin/zsh
+S'està canviant l'intèrpret d'ordres per rotter.
+Contrasenya:
+S'ha canviat l'intèrpret d'ordres.
+```
+
+Restart the session to make the change effective.
+
+### Customizing the shell
+
+For basic configuration run the following command:
+
+``` shell
+bunker-T440p% zsh /usr/share/zsh/functions/Newuser/zsh-newuser-install -f
+```
+Follow the recommended options, save and exit.
+
+### Oh-My-Zsh & plugins
+
+Now, let’s install a powerful additional program: Oh My Zsh
+
+``` shell
+bunker-T440p% sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+
+
 
 ## Finally, Neofetch!
 
