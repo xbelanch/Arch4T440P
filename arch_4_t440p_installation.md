@@ -867,10 +867,15 @@ E [27/May/2021:09:19:02 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.loca
 
 
 
-## LastPass support [Unfinished]
+## LastPass support
 
 ``` shell
 # pacman -S lastpass-cli
+```
+You can find the whole explanation of how to use it at:
+
+``` shell
+$ man lpass
 ```
 
 ## Bye bye Firefox, welcome qutebrowser? [Unfinished]
