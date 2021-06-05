@@ -800,7 +800,14 @@ This a list of tiny applications needed for the everyday:
 * **Screenshot**: [scrot](https://github.com/resurrecting-open-source-projects/scrot)
 * **Tex Live**: [The LaTeX Project](https://www.tug.org/texlive/)
 
-## Printing
+## Programming
+
+### Node.js and npm
+
+Check out the official arch wiki and follow the steps to install it: [Node.js](https://wiki.archlinux.org/title/Node.js)
+
+
+## Printing [Unfinished] [Failed]
 
 // NOTE: At the moment I have no luck with the brother HL-L2375DW
 
@@ -863,9 +870,6 @@ E [27/May/2021:09:13:39 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.loca
 W [27/May/2021:09:17:26 +0200] CreateProfile failed: org.freedesktop.ColorManager.AlreadyExists:profile id \'Brother_HL-L2375DW_series-Gray..\' already exists
 E [27/May/2021:09:19:02 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.local:631\": Name or service not known
 ```
-
-
-
 
 ## LastPass support
 
@@ -996,10 +1000,17 @@ Now, let’s install a powerful additional program: Oh My Zsh
 bunker-T440p% sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
+### Themes GTK
+
+You can change gtk settings with `lxappearance`.
+
+You can download from `yay` a lot of themes and icons sets from [gnome-look.org](https://www.gnome-look.org/s/Gnome/browse/).
 
 
 
-## Finally, Neofetch!
+## Finally, Neofetch
+
+To see or verify everything is working as expected!
 
 ``` shell
 # pacman -S neofetch

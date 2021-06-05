@@ -19,6 +19,7 @@ A lot of this guide belongs to another people who wrote useful articles of how t
 * [arch linux for dummies](https://github.com/jieverson/dotfiles/wiki/arch-linux-for-dummies). Last update Sep 21, 2016.
 * [A detailed overview of how I installed Arch Linux on my Lenovo ThinkPad X1 Extreme (Gen 1), having never installed Arch before.](https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3)
 * [LightDM Configuration](https://christitus.com/lightdm-configuration/). Last update Jan 8, 2020.
+* [Your Guide to a Practical Linux Desktop With i3WM](https://www.devpy.me/your-guide-to-a-practical-linux-desktop-with-i3wm/)
 
 ## TODO
 
