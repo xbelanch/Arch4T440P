@@ -800,6 +800,10 @@ This a list of tiny applications needed for the everyday:
 * **Screenshot**: [scrot](https://github.com/resurrecting-open-source-projects/scrot)
 * **Tex Live**: [The LaTeX Project](https://www.tug.org/texlive/)
 
+On the other hand, check out this amazing list of [modern unix commands](https://github.com/ibraheemdev/modern-unix).
+
+Also remember to check out the aliases you defined at the dotfile with the same name.
+
 ## Programming
 
 ### Node.js and npm
