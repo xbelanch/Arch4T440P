@@ -810,8 +810,7 @@ Also remember to check out the aliases you defined at the dotfile with the same 
 
 Check out the official arch wiki and follow the steps to install it: [Node.js](https://wiki.archlinux.org/title/Node.js)
 
-
-## Printer set up
+## Setup a printer
 
 // NOTE: At the moment I have no luck with the brother HL-L2375DW
 
@@ -833,7 +832,6 @@ $ sudo systemctl start cups.service
 ```
 
 Check it out if cups is running okay opening this [address](http://localhost:631/) on browser.
-
 
 Second we need to install the specific driver of the printer. I have a [brother hl-l2375dw](https://www.brother.is/printers/laser-printers/hl-l2375dw). So I found this package on aur repository: [https://aur.archlinux.org/packages/brother-hll2375dw/](https://aur.archlinux.org/packages/brother-hll2375dw/). With yay is quite simple to found and install:
 
@@ -890,26 +888,55 @@ As you can see the printer is found so you can add a new printer through cups we
 So you need to remove this printer and add new one from console (you need to know what's the IP of the printer):
 
 ``` shell
-sudo lpadmin -p Brother_HL-L2375DW -E -v ipp://192.168.1.210/BINARY_P1
+sudo lpadmin -p Brother_HL-L2375DW -E -v "lpd://192.168.1.210" -m brother-HLL2375DW-cups-en.ppd
+```
+Remember you can find the list of avalaible drivers on your machine executing this command:
+
+``` shell
+$ sudo lpinfo -m
+driverless:ipp://Brother%20HL-L2375DW%20series._ipp._tcp.local/ Brother HL-L2375DW series, driverless, cups-filters 1.28.9
+brother-HLL2375DW-cups-en.ppd Brother HLL2375DW for CUPS
+drv:///sample.drv/dymo.ppd DYMO Label Printer
+drv:///sample.drv/epson9.ppd Epson 9-Pin Series
+drv:///sample.drv/epson24.ppd Epson 24-Pin Series
+lsb/usr/cupsfilters/Fuji_Xerox-DocuPrint_CM305_df-PDF.ppd Fuji Xerox DocuPrint CM305 df PDF
+drv:///generic-brf.drv/gen-brf.ppd Generic Braille embosser, 1.0
+drv:///cupsfilters.drv/pwgrast.ppd Generic IPP Everywhere Printer
+drv:///sample.drv/generpcl.ppd Generic PCL Laser Printer
+lsb/usr/cupsfilters/Generic-PDF_Printer-PDF.ppd Generic PDF Printer
+...
 ```
 
 At this moment you can print a simple test page and whatever you need to print from browser or pdf viewer (not mupdf!) like xpdf.
-
 
 ``` shell
 sudo pacman -S xpdf
 ```
 
-And when we print some sample page from a pdf we have no luck again because the printer prints nothing and gives us a blank pages!
+Or you cant print a test page from command line following this steps. First of all, we need to choose the main one as the lpd default printer:
 
-// TODO: Fix printer prints blank pages from a pdf client
+``` shell
+$ lpoptions -d Brother_HL-L2375DW
+```
+
+Verify if it is correct:
+
+``` shell
+$ lpq
+Brother_HL-L2375DW is ready
+```
+
+Now it's time to print a sample file and see if our printer is running okay:
+
+``` shell
+lpr sample.pdf
+```
 
 ### References:
 
-
 + [CUPS Network printer adds, but won't print...](https://bbs.archlinux.org/viewtopic.php?id=92011)
 + [Brother networked printer](https://wiki.gentoo.org/wiki/Brother_networked_printer#Networked_printer_detection)
-
++ [Set up printer recipe](https://gist.github.com/notdodo/660a2a67b9bc8a815ba537530137636a)
 
 ## LastPass support
 
