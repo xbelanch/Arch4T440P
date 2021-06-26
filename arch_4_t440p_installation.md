@@ -811,14 +811,14 @@ Also remember to check out the aliases you defined at the dotfile with the same 
 Check out the official arch wiki and follow the steps to install it: [Node.js](https://wiki.archlinux.org/title/Node.js)
 
 
-## Printer set up [Unfinished] [Failed]
+## Printer set up
 
 // NOTE: At the moment I have no luck with the brother HL-L2375DW
 
 You must install cups package as you can read at [Cups](https://wiki.archlinux.org/title/CUPS)
 
 ``` shell
-$ sudo pacman -S cups
+$ sudo pacman -S cups ghostscript gsfonts libcups
 ```
 
 After cups is installed, you need to enable and start the cups service:
@@ -845,10 +845,7 @@ aur/brother-hll2375dw 4.0.0-2 (+2 1.05)
 $ yay -S brother-hll2375dw
 ```
 
-Still no luck... found this reddit: https://www.reddit.com/r/archlinux/comments/c9xddz/help_me_figure_out_cups/
-
-
-Third you need to install avahi:
+Third you need to install `avahi`:
 
 ``` shell
 $ pacman -Ss avahi
@@ -856,11 +853,21 @@ extra/avahi 0.8+20+gd1e71b3-1 [instal·lat]
     Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
 ```
 
-and....
+As you did with cups you must enable and start that service:
 
 ``` shell
-[rotter@bunker-T440p Arch4T440P]$ sudo systemctl start avahi-daemon.service
-[rotter@bunker-T440p Arch4T440P]$ lpinfo -v
+$ sudo systemctl enable avahi-daemon.service
+Created symlink /etc/systemd/system/dbus-org.freedesktop.Avahi.service → /usr/lib/systemd/system/avahi-daemon.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service → /usr/lib/systemd/system/avahi-daemon.service.
+Created symlink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket → /usr/lib/systemd/system/avahi-daemon.socket
+
+$ sudo systemctl start avahi-daemon.service
+```
+
+After that you can check if printer is discovered by `lpinfo`:
+
+``` shell
+$ lpinfo -v
 network beh
 file cups-brf:/
 network http
@@ -874,16 +881,35 @@ network dnssd://Brother%20HL-L2375DW%20series._ipp._tcp.local/?uuid=e3248000-80c
 network ipp://Brother%20HL-L2375DW%20series._ipp._tcp.local/
 ```
 
-But not luck already:
+As you can see the printer is found so you can add a new printer through cups web interface. But when I try to print a simple test page CUPS shows an error on the info print job:
 
 ``` shell
-$ tail -n 100 -f /var/log/cups/error_log
-E [27/May/2021:09:11:47 +0200] [CGI] ippfind (PID 8437) stopped with status 2!
-E [27/May/2021:09:11:47 +0200] [cups-deviced] PID 8421 (driverless) stopped with status 2!
-E [27/May/2021:09:13:39 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.local:631\": Name or service not known
-W [27/May/2021:09:17:26 +0200] CreateProfile failed: org.freedesktop.ColorManager.AlreadyExists:profile id \'Brother_HL-L2375DW_series-Gray..\' already exists
-E [27/May/2021:09:19:02 +0200] [CGI] Unable to connect to \"BRN3C2AF437B07C.local:631\": Name or service not known
+"Unable to locate printer "BRN3C2AF437B07C.local"."
 ```
+
+So you need to remove this printer and add new one from console (you need to know what's the IP of the printer):
+
+``` shell
+sudo lpadmin -p Brother_HL-L2375DW -E -v ipp://192.168.1.210/BINARY_P1
+```
+
+At this moment you can print a simple test page and whatever you need to print from browser or pdf viewer (not mupdf!) like xpdf.
+
+
+``` shell
+sudo pacman -S xpdf
+```
+
+And when we print some sample page from a pdf we have no luck again because the printer prints nothing and gives us a blank pages!
+
+// TODO: Fix printer prints blank pages from a pdf client
+
+### References:
+
+
++ [CUPS Network printer adds, but won't print...](https://bbs.archlinux.org/viewtopic.php?id=92011)
++ [Brother networked printer](https://wiki.gentoo.org/wiki/Brother_networked_printer#Networked_printer_detection)
+
 
 ## LastPass support
 
