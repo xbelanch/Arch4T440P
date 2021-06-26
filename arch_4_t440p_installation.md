@@ -811,7 +811,7 @@ Also remember to check out the aliases you defined at the dotfile with the same 
 Check out the official arch wiki and follow the steps to install it: [Node.js](https://wiki.archlinux.org/title/Node.js)
 
 
-## Printing [Unfinished] [Failed]
+## Printer set up [Unfinished] [Failed]
 
 // NOTE: At the moment I have no luck with the brother HL-L2375DW
 
@@ -821,24 +821,34 @@ You must install cups package as you can read at [Cups](https://wiki.archlinux.o
 $ sudo pacman -S cups
 ```
 
-I found this: https://aur.archlinux.org/packages/brother-hll2375dw/
+After cups is installed, you need to enable and start the cups service:
 
-So...
+``` shell
+$ sudo systemctl enable cups.service
+Created symlink /etc/systemd/system/printer.target.wants/cups.service → /usr/lib/systemd/system/cups.service.
+Created symlink /etc/systemd/system/sockets.target.wants/cups.socket → /usr/lib/systemd/system/cups.socket.
+Created symlink /etc/systemd/system/multi-user.target.wants/cups.path → /usr/lib/systemd/system/cups.path.
+
+$ sudo systemctl start cups.service
+```
+
+Check it out if cups is running okay opening this [address](http://localhost:631/) on browser.
+
+
+Second we need to install the specific driver of the printer. I have a [brother hl-l2375dw](https://www.brother.is/printers/laser-printers/hl-l2375dw). So I found this package on aur repository: [https://aur.archlinux.org/packages/brother-hll2375dw/](https://aur.archlinux.org/packages/brother-hll2375dw/). With yay is quite simple to found and install:
 
 ``` shell
 $ yay -Ss hll2375dw
 aur/brother-hll2375dw 4.0.0-2 (+2 1.05)
     Brother HL-L2375DW CUPS driver
-```
 
-``` shell
 $ yay -S brother-hll2375dw
 ```
 
 Still no luck... found this reddit: https://www.reddit.com/r/archlinux/comments/c9xddz/help_me_figure_out_cups/
 
 
-And maybe I need to install avahi:
+Third you need to install avahi:
 
 ``` shell
 $ pacman -Ss avahi
