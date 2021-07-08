@@ -806,6 +806,14 @@ Also remember to check out the aliases you defined at the dotfile with the same 
 
 ## Programming
 
+### Development
+
+You'll need to install the linux manual pages for surviving!
+
+``` shell
+$ sudo pacman -S man-pages
+```
+
 ### Node.js and npm
 
 Check out the official arch wiki and follow the steps to install it: [Node.js](https://wiki.archlinux.org/title/Node.js)
