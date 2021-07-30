@@ -1082,6 +1082,17 @@ You can change gtk settings with `lxappearance`.
 You can download from `yay` a lot of themes and icons sets from [gnome-look.org](https://www.gnome-look.org/s/Gnome/browse/).
 
 
+### Mount USB sticks
+
+Simply like that:
+
+``` shell
+sudo mount -o gid=users,fmask=113,dmask=002 /dev/<sdbn> /mnt/<usb>
+```
+
+Where sdbn is the number assigned by kernel and <usb> is the directory name where we want to mount the stick usb.
+
+
 
 ## Finally, Neofetch
 
