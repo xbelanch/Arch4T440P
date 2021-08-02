@@ -1126,10 +1126,10 @@ $ otd-gui
 Simply like that:
 
 ``` shell
-sudo mount -o gid=users,fmask=113,dmask=002 /dev/<sdbn> /mnt/<usb>
+sudo mount -o uid=<username>,gid=users,fmask=113,dmask=002,umask=000 /dev/<sdbn> /mnt/<usb>
 ```
 
-Where sdbn is the number assigned by kernel and <usb> is the directory name where we want to mount the stick usb.
+Where `username` is the name of active user, `sdbn` is the number assigned by kernel to the identified external drive and `usb` is the directory name where we want to mount the stick usb.
 
 
 
