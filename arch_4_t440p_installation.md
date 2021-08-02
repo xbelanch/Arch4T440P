@@ -1082,6 +1082,45 @@ You can change gtk settings with `lxappearance`.
 You can download from `yay` a lot of themes and icons sets from [gnome-look.org](https://www.gnome-look.org/s/Gnome/browse/).
 
 
+### Tablet Gaomon S620
+
+First of all you need to install the `opentabletdriver` (more info at [OpenTabletDriver](http://opentabletdriver.net/)):
+
+``` shell
+$ yay -S opentabletdriver
+```
+
+Unplug the tablet and start the daemon:
+
+``` shell
+$ otd
+```
+and then:
+
+``` shell
+$ systemctl --user enable --now opentabletdriver.service
+```
+
+We'll find that tablet still doesn't recognized so we need to remove a kernel module. In our case, the `hid_uclogic`:
+
+``` shell
+$ sudo rmmod hid_uclogic
+$ sudo udevadm control --reload-rules && sudo udevadm trigger
+$ systemctl --user restart opentabletdriver.service
+```
+
+In order to make it persistent we need blacklisting the kernel module by creating a file in `/etc/modprobe.d/blacklist.conf` with a single line:
+
+``` text
+blacklist hid_uclogic
+```
+
+Finally open the configuration gui tool:
+
+``` shell
+$ otd-gui
+```
+
 ### Mount USB sticks
 
 Simply like that:
