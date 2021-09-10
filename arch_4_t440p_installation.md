@@ -584,6 +584,29 @@ Change the layout, e.g. in my case to Spain Catalan by running
 # pacman -S ttf-ubuntu-font-family ttf-fantasque-sans-mono ttf-dejavu ttf-roboto ttf-font-awesome noto-fonts noto-fonts-cjk noto-fonts-emoji
 ```
 
+## Install manually fonts
+
+Locate your font folder. Might be one of:
+
+``` shell
+~/.fonts
+~/.local/fonts
+~/.local/share/fonts
+/usr/share/fonts/truetype/newfonts/
+```
+
+and copy the files there. After that you have to regenerate the font cache:
+
+``` shell
+fc-cache -f -v
+```
+
+and verify installation:
+
+``` shell
+fc-list | grep "<font name>"
+```
+
 ## Installing basic applications
 
 In my case I'd need these applications running on my refurbished laptop:
@@ -1130,6 +1153,34 @@ sudo mount -o uid=<username>,gid=users,fmask=113,dmask=002,umask=000 /dev/<sdbn>
 ```
 
 Where `username` is the name of active user, `sdbn` is the number assigned by kernel to the identified external drive and `usb` is the directory name where we want to mount the stick usb.
+
+### Mount CDs
+
+https://unix.stackexchange.com/questions/316401/how-to-mount-a-disk-image-from-the-command-line/316407#316407
+
+λ 12:14p. m. rotter Sandbox dd if=/dev/sr0 of=discmage.iso bs=2048 count=313305 status=progress
+139442176 octets (139 MB, 133 MiB) copiats, 77 s, 1,8 MB/s
+69104+0 registres llegits
+69104+0 registres escrits
+141524992 octets (142 MB, 135 MiB) copiats, 77,906 s, 1,8 MB/s
+λ 12:16p. m. rotter Sandbox ls
+total 138216
+-rw-r--r-- 1 rotter users 141524992  6 ag. 12:16 discmage.iso
+drwxr-xr-x 2 rotter users      4096  6 ag. 11:49 pepehands
+λ 12:16p. m. rotter Sandbox sudo losetup /dev/loop0 discmage.iso
+λ 12:16p. m. rotter Sandbox sudo losetup --find --show discmage.iso
+/dev/loop2
+λ 12:17p. m. rotter Sandbox sudo mount /dev/loop2 pepehands
+mount: /home/rotter/Sandbox/pepehands: WARNING: source write-protected, mounted read-only
+
+
+λ 12:17p. m. rotter Sandbox umount pepehands
+umount: /home/rotter/Sandbox/pepehands: must be superuser to unmount.
+λ 12:27p. m. rotter Sandbox sudo umount pepehands
+[sudo] contrasenya per a rotter:
+λ 12:28p. m. rotter Sandbox sudo losetup -d /dev/loop0
+λ 12:28p. m. rotter Sandbox sudo losetup -d /dev/loop1
+λ 12:28p. m. rotter Sandbox sudo losetup -d /dev/loop2
 
 
 
