@@ -686,6 +686,63 @@ To enable Fn Keys, you need to install PulseAudio:
 # sudo pacman -S pulseaudio pulseaudio-alsa
 ```
 
+## Bluetooth
+
+Let's try to pairing a bluez mouse with T44p.
+
+``` shell
+$ sudo pacman -S bluez bluez-utils
+```
+
+``` shell
+$ modprobe btusb
+```
+
+``` shell
+$ sudo systemctl start bluetooth.service
+```
+
+``` shell
+sudo pacman -S bluez-hid2hci
+```
+
+``` shell
+$ bluetoothctl
+```
+
+``` shell
+[bluetooth]# power on
+[bluetooth]# pairable on
+[bluetooth]# discoverable on
+[bluetooth]# discoverable-timeout 3600
+[bluetooth]# scan on
+```
+
+``` shell
+[NEW] Device F4:EE:25:E4:4D:3B BT5.0 Mouse
+```
+
+``` shell
+[bluetooth]# trust  F4:EE:25:E4:4D:3B
+```
+
+``` shell
+[bluetooth]# pair F4:EE:25:E4:4D:3B
+```
+
+``` shell
+Attempting to pair with F4:EE:25:E4:4D:3B
+```
+
+``` shell
+[CHG] Device F4:EE:25:E4:4D:3B Connected: yes
+```
+``` shell
+[BT5.0 Mouse]# paired-devices
+Device F4:EE:25:E4:4D:3B BT5.0 Mouse
+```
+
+
 ## Backlight system
 
 After google it, I found that [I am using T440p with haswell processor having intel hd4600, I am not sure if I am missing any graphics configuration.](https://www.reddit.com/r/archlinux/comments/edomnq/i_am_using_t440p_with_haswell_processor_having/) and I install the next package:
