@@ -742,6 +742,14 @@ Attempting to pair with F4:EE:25:E4:4D:3B
 Device F4:EE:25:E4:4D:3B BT5.0 Mouse
 ```
 
+At this point, everytime I need to connect or reconnect the mouse (or another paired devices) I have to do this:
+
+``` shell
+sudo systemctl start bluetooth.service && bluetooth power on
+```
+
+and mouse starts to works fine.
+
 
 ## Backlight system
 
