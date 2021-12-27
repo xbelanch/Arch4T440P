@@ -1247,7 +1247,19 @@ umount: /home/rotter/Sandbox/pepehands: must be superuser to unmount.
 λ 12:28p. m. rotter Sandbox sudo losetup -d /dev/loop1
 λ 12:28p. m. rotter Sandbox sudo losetup -d /dev/loop2
 
+### NFS
 
+This basic tutorial helps a lot: [[HowTo] Connect Manjaro to Synology NAS using NFS](https://archived.forum.manjaro.org/t/howto-connect-manjaro-to-synology-nas-using-nfs/115816),
+
+Remember you need to open the NFS ports from Synology.
+
+``` shell
+sudo systemctl enable --now nfs-client.target
+sudo mkdir /mnt/Twitch/
+sudo mount -t nfs <name>.ddns.net:/volume1/Twitch /mnt/Twitch
+```
+
+At this point you have access to the synology shared folder.
 
 ## Finally, Neofetch
 
