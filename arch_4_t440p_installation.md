@@ -1261,6 +1261,19 @@ sudo mount -t nfs <name>.ddns.net:/volume1/Twitch /mnt/Twitch
 
 At this point you have access to the synology shared folder.
 
+## Root partition (/) is running out of space!
+
+* Use `ncdu2 -x /` as root to see where space is taken.
+* Use first `du -md1 / | sort -n` and then `pacman -Scc`
+* Use `pacman -Qdt` to see orphan packages
+* Use bleachbit (AUR) to recover some
+* Use cacheclean (AUR) to limit # of old packages
+* Use `pacgraph -c |` less to see which packages are largest disk users and ask yourself if you can do without them.  Pacgraph is in [community].
+
+Check out this thread: [running out of disk space on root partition](https://bbs.archlinux.org/viewtopic.php?id=123224) and other related to the same topic.
+
+
+
 ## Finally, Neofetch
 
 To see or verify everything is working as expected!
