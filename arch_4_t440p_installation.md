@@ -1251,6 +1251,8 @@ umount: /home/rotter/Sandbox/pepehands: must be superuser to unmount.
 
 This basic tutorial helps a lot: [[HowTo] Connect Manjaro to Synology NAS using NFS](https://archived.forum.manjaro.org/t/howto-connect-manjaro-to-synology-nas-using-nfs/115816),
 
+Another great resource: [Connect to Synology NFS share]u(https://root.nix.dk/en/manjaro/connect-to-synology-nfs-sharer)
+
 Remember you need to open the NFS ports from Synology.
 
 ``` shell
