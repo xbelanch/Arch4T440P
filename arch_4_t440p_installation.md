@@ -102,6 +102,18 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 ```
 
+#### How to set it permanently
+
+Check out the NetworkManager program: [link](https://wiki.archlinux.org/title/NetworkManager) and:
+
+``` shell
+sudo systemctl enable NetworkManager.service
+sudo systemctl start NetworkManager.service
+```
+
+and open `nmtui` to define the connection.
+
+
 #### Wi-Fi
 
 Most of the guides recommend to use `wifi-menu`, command that has been deprecated in favor of `iwctl`. So, run the following command and connect to your wi-fi network:
