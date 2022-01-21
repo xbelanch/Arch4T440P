@@ -566,6 +566,23 @@ enable Light Desktop Manager by running:
 
 and reboot the system.
 
+## NVIDIA issue?
+
+That's black hole of problems. Check out this links:
+
+* [Xorg won't start properly [SOLVED]](https://bbs.archlinux.org/viewtopic.php?id=246022)
+* [[SOLVED] Lightdm won't start and exits](https://bbs.archlinux.org/viewtopic.php?id=269153)
+* [NVIDIA/Troubleshooting::X fails with no screens found](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting#X_fails_with_%22no_screens_found%22_when_using_Multiple_GPUs)
+* [Nvidia 470xx drivers not working](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjlxdnJq8L1AhVOzYUKHTewB1kQFnoECAoQAQ&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Farchlinux%2Fcomments%2Fqok4qq%2Fnvidia_470xx_drivers_not_working%2F&usg=AOvVaw16eicoeRh02TOemhPNRcXv)
+* [Failed to initialize the NVIDIA kernel module after updating](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjp982DpsL1AhUHxoUKHZoMCMgQFnoECAcQAQ&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Farchlinux%2Fcomments%2Fqjt2ks%2Ffailed_to_initialize_the_nvidia_kernel_module%2F&usg=AOvVaw2BTMWukckIMZgr0bBLAUDM)
+
+Remember it's so important:
+
+```
+pacman -S linux-headers
+```
+
+On the other hand, you need AUR to download some community packages like older drivers.
 
 ## Change keyboard layout X11
 
@@ -785,6 +802,7 @@ In the future we can decide a simple script like tsoding or something more... te
 
 from: https://github.com/gotohr/i3wm-thinkpad-450s/blob/master/config
 
+``` shell
 set $mode_screen Multi-monitor setup: (e)xternal only, (i)nternal only, (c)lone, (s)eparated
 mode "$mode_screen" {
     bindsym c exec --no-startup-id xrandr --output $OUTPUT_E --auto --output $OUTPUT_I --auto
@@ -796,7 +814,7 @@ mode "$mode_screen" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+m mode "$mode_screen"
-
+```
 
 ## Resize float windows on i3wm [Unfinished]
 
