@@ -1249,6 +1249,14 @@ sudo mount -o uid=<username>,gid=users,fmask=113,dmask=002,umask=000 /dev/<sdbn>
 
 Where `username` is the name of active user, `sdbn` is the number assigned by kernel to the identified external drive and `usb` is the directory name where we want to mount the stick usb.
 
+If you recieve this error message: unknown filesystem type 'ntfs'. you must install:
+
+``` shell
+pacman -S ntfs-3g
+```
+
+// @TODO: Use Udisks instead of manually mounting usb sticks https://wiki.archlinux.org/title/Udisks
+
 ### Mount CDs
 
 https://unix.stackexchange.com/questions/316401/how-to-mount-a-disk-image-from-the-command-line/316407#316407
