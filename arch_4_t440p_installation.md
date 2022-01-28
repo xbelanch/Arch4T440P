@@ -847,6 +847,16 @@ From: https://github.com/iDigitalFlame/dotfiles/blob/2526fd41ec57d6d31f9da441729
 Read this: [Change the urxvt font size on the fly](https://blog.khmersite.net/2017/12/change-the-urxvt-font-size-on-the-fly/)
 
 
+## Issue with urxvt and Iosevka
+
+Take a look of this:
+
+* [https://github.com/ryanoasis/nerd-fonts/wiki/Terminal-Emulators#urxvt](https://github.com/ryanoasis/nerd-fonts/wiki/Terminal-Emulators#urxvt)
+* [Iosevka Nerd Font works in polybar, but not in urxvt#313 ](https://github.com/ryanoasis/nerd-fonts/issues/313)
+* [Some unicode symbols still not displayed with urxvt or xterm #176 ](https://github.com/powerline/fonts/issues/176)
+
+You can see at .Xresources config file which Iosevka need to install.
+
 ## Dotfiles [Unfinished]
 
 Take a look of this doc:
