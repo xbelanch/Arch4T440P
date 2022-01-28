@@ -613,6 +613,8 @@ Change the layout, e.g. in my case to Spain Catalan by running
 # pacman -S ttf-ubuntu-font-family ttf-fantasque-sans-mono ttf-dejavu ttf-roboto ttf-font-awesome noto-fonts noto-fonts-cjk noto-fonts-emoji
 ```
 
+Remeber that install noto-fonts-cjk is mandatory if you want to see japanese glyphs!
+
 ## Install manually fonts
 
 Locate your font folder. Might be one of:
