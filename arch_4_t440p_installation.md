@@ -166,7 +166,7 @@ And then set it up. In my case would be:
 # timedatectl set-timezone Europe/Madrid
 ```
 
-Check it again to ensure everything is right as expected.
+Check it again to ensure everything is right as expected. More information here: [Enable System clock synchronization](https://askubuntu.com/questions/1046214/enable-system-clock-synchronization)
 
 ### Partitioning
 
