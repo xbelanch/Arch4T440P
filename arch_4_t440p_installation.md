@@ -717,6 +717,14 @@ To enable Fn Keys, you need to install PulseAudio:
 # sudo pacman -S pulseaudio pulseaudio-alsa
 ```
 
+**Wait!**: I found myself trying to hear sound on a desktop with NVidia card and USB Headphones but with not success. This post helps to fix it:
+
+[HDA-NVIDIA-sound-HDMI-laptops-mhwd-nvidia ](https://forum.garudalinux.org/t/hda-nvidia-sound-hdmi-laptops-mhwd-nvidia/6192/4)
+
+Indeed, try `pavucontrol` and fix it (the mute option).
+
+
+
 ## Bluetooth
 
 Let's try to pairing a bluez mouse with T44p.
