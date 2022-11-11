@@ -154,6 +154,8 @@ If system clock is not synchronized and NTP is inactive, run this command that e
 # timedatectl set-ntp true
 ```
 
+(sometimes clock is ahead by few minutes). See this: [Clock is sometimes ahead by 2 hours](https://www.reddit.com/r/archlinux/comments/u9dvxv/clock_is_sometimes_ahead_by_2_hours/)
+
 Second find your time zone:
 
 ``` shell
